@@ -56,13 +56,13 @@ function isWorkDay(date) {
 function isCorrectSSID(ssid) {
   return config.SSIDS.includes(ssid);
 }
-async function save(date, ssid) {
+async function save(date, ssid, action) {
   return new Promise(async (resolve, reject) => {
     if (!isWorkDay(date) || !isCorrectSSID(ssid)) resolve();
     let a = await verifyDataDir();
     let b = await verifyDataFile();
     let data = await readData();
-    data.push({ date, ssid });
+    data.push({ date, ssid, action });
     let c = await saveData(data);
     resolve();
   });
@@ -78,7 +78,7 @@ app.post('/', jsonParser, async (req, res) => {
   if (!req.body.ssid) {
     return res.status(500).send({ error: 'Missing required fields' });
   }
-  await save(new Date(), req.body.ssid);
+  await save(new Date(), req.body.ssid, req.body.action);
   res.send('ok');
 });
 

@@ -7,8 +7,10 @@ html
         tr
           th(style="text-align:left") location
           th(style="text-align:left") time
+          th(style="text-align:left") action
       tbody
         each row in data
           tr
             th(style="text-align:left")= row.ssid
             th(style="text-align:left")= row.date
+            th(style="text-align:left")= row.action
