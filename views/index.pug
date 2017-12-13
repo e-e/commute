@@ -1,0 +1,14 @@
+html
+  head
+    title commute times
+  body
+    table(style="width:100%;")
+      thead
+        tr
+          th(style="text-align:left") location
+          th(style="text-align:left") time
+      tbody
+        each row in data
+          tr
+            th(style="text-align:left")= row.ssid
+            th(style="text-align:left")= row.date

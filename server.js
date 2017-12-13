@@ -68,7 +68,10 @@ async function save(date, ssid) {
   });
 }
 
-app.get('/', (req, res) => {});
+app.get('/', async (req, res) => {
+  let data = await readData();
+  res.render('index', { data });
+});
 app.post('/', jsonParser, async (req, res) => {
   // logger(req);
   logger(req.body);
