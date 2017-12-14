@@ -67,9 +67,41 @@ async function save(date, ssid, action) {
     resolve();
   });
 }
+function pad(n) {
+  n = n.toString();
+  while (n.length < 2) n = `0${n}`;
+  return n;
+}
+function formatDate(date) {
+  const wkdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+  date = new Date(date);
+  console.log(date);
+  console.log(date.toLocaleDateString());
+  console.log(date.toTimeString());
+  let day = wkdays[date.getDay()];
+  return `${day} [${date.toLocaleDateString()}] ${date.toTimeString()}`;
+}
 
 app.get('/', async (req, res) => {
   let data = await readData();
+  data = data.map(row => {
+    row.date = formatDate(row.date);
+    return row;
+  });
   res.render('index', { data });
 });
 app.post('/', jsonParser, async (req, res) => {
